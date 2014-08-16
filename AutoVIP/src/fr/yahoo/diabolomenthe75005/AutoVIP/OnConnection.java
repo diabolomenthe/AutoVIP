@@ -42,11 +42,11 @@ public class OnConnection implements Listener{
 			//Ajout des groupes
 			if(groupeOK != null){
 				for(int i=0;i<groupeOK.size();i++){
-					if(!permission.playerInGroup(world,playername, groupeOK.get(i).getString("groupe"))){
+					if(!permission.playerInGroup(world,player, groupeOK.get(i).getString("groupe"))){
 						//plugin.getLogger().info("OK :"+groupeOK.get(0).getString("groupe"));
-						permission.playerAddGroup(world,playername,groupeOK.get(i).getString("groupe"));
-						if(permission.playerInGroup(world,playername, defaultgroup)){
-							permission.playerRemoveGroup(world,playername,defaultgroup);
+						permission.playerAddGroup(world,player,groupeOK.get(i).getString("groupe"));
+						if(permission.playerInGroup(world,player, defaultgroup)){
+							permission.playerRemoveGroup(world,player,defaultgroup);
 						}
 					}
 				}
@@ -56,17 +56,17 @@ public class OnConnection implements Listener{
 			if(groupeKO != null){
 				for(int i=0;i<groupeKO.size();i++){
 
-					if(permission.playerInGroup(world,playername, groupeKO.get(i).getString("groupe"))){
+					if(permission.playerInGroup(world,player, groupeKO.get(i).getString("groupe"))){
 						//plugin.getLogger().info("KO :"+groupeKO.get(0).getString("groupe"));
-						permission.playerRemoveGroup(world,playername,groupeKO.get(i).getString("groupe"));
+						permission.playerRemoveGroup(world,player,groupeKO.get(i).getString("groupe"));
 					}
 				}
 			}
 
 			//Ajout du groupe default si aucune permission
 			if(groupeOK.size() == 0 || groupeOK == null){
-				if(permission.getPlayerGroups(world,playername).length == 0){
-					permission.playerAddGroup(world,playername,defaultgroup);
+				if(permission.getPlayerGroups(world,player).length == 0){
+					permission.playerAddGroup(world,player,defaultgroup);
 				}
 			}
 		}
