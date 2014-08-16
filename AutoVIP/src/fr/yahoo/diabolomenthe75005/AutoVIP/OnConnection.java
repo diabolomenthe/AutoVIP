@@ -33,8 +33,8 @@ public class OnConnection implements Listener{
 		String world;
 		//plugin.getLogger().info("Connexion joueur " + playername);
 		List<World> worlds = plugin.getServer().getWorlds();
-		List<SqlRow> groupeOK = GetGroupOK(playername);
-		List<SqlRow> groupeKO = GetGroupKO(playername);
+		List<SqlRow> groupeOK = GetGroupOK(player);
+		List<SqlRow> groupeKO = GetGroupKO(player);
 
 		//Modif par monde
 		for(int j=0;j<worlds.size();j++){
@@ -73,16 +73,16 @@ public class OnConnection implements Listener{
 
 	}
 
-	private List<SqlRow> GetGroupOK(String playername){
-		SqlQuery bean = plugin.getDatabase().createSqlQuery("SELECT b.groupe FROM payment_header h, pay_player_avantage a, pay_avantage b WHERE h.playername = :playername AND h.idplayer = a.idplayer AND a.idavantage = b.idavantage AND a.datedebut < now() AND a.datefin > now()");
-		bean.setParameter("playername", playername);
+	private List<SqlRow> GetGroupOK(Player player){
+		SqlQuery bean = plugin.getDatabase().createSqlQuery("SELECT b.groupe FROM payment_header h, pay_player_avantage a, pay_avantage b WHERE h.uuid = :uuid AND h.idplayer = a.idplayer AND a.idavantage = b.idavantage AND a.datedebut < now() AND a.datefin > now()");
+		bean.setParameter("uuid", player.getUniqueId().toString());
 		List<SqlRow> groupe = bean.findList();
 		return groupe;
 	}
 
-	private List<SqlRow> GetGroupKO(String playername){
-		SqlQuery bean = plugin.getDatabase().createSqlQuery("SELECT c.groupe FROM pay_avantage c WHERE c.groupe NOT IN (SELECT b.groupe FROM payment_header h, pay_player_avantage a, pay_avantage b WHERE h.playername = :playername AND h.idplayer = a.idplayer AND a.idavantage = b.idavantage AND a.datedebut < now() AND a.datefin > now())");
-		bean.setParameter("playername", playername);
+	private List<SqlRow> GetGroupKO(Player player){
+		SqlQuery bean = plugin.getDatabase().createSqlQuery("SELECT c.groupe FROM pay_avantage c WHERE c.groupe NOT IN (SELECT b.groupe FROM payment_header h, pay_player_avantage a, pay_avantage b WHERE h.uuid = :uuid AND h.idplayer = a.idplayer AND a.idavantage = b.idavantage AND a.datedebut < now() AND a.datefin > now())");
+		bean.setParameter("uuid", player.getUniqueId().toString());
 		List<SqlRow> groupe = bean.findList();
 		return groupe;
 	}
