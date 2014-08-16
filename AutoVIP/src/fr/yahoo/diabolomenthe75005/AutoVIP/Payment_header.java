@@ -17,6 +17,7 @@ public class Payment_header implements Serializable{
 	@Id private int idplayer;
 	@Column(unique=true,length=50) private String forumname;
 	@Column(unique=true,length=50) private String playername;
+	@Column(unique=true,length=36) private String UUID;
 	@Column(columnDefinition="Decimal(10,2) default '0.00'") private double amount;
 	@Column(columnDefinition="Integer default '0'") private int token;
 	
@@ -32,6 +33,12 @@ public class Payment_header implements Serializable{
 	}
 	public void setForumname(String forumname) {
 		this.forumname = forumname;
+	}
+	public String getUUID() {
+		return UUID;
+	}
+	public void setUUID(String uUID) {
+		UUID = uUID;
 	}
 	public String getPlayername() {
 		return playername;

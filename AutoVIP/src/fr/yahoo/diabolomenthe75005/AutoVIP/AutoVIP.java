@@ -7,9 +7,12 @@ import javax.persistence.PersistenceException;
 
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import fr.yahoo.diabolomenthe75005.AutoVIP.Command.Commandautovip;
 
 public class AutoVIP extends JavaPlugin{
 	private Permission permission = null;
@@ -17,6 +20,7 @@ public class AutoVIP extends JavaPlugin{
 	//Fonction lors du lancement du serveur
 	@Override
 	public void onEnable(){
+		//database
 		try{
 			this.getDatabase().find(Payment_header.class).findRowCount();
 		}
@@ -24,10 +28,17 @@ public class AutoVIP extends JavaPlugin{
 			this.installDDL();
 		}
 		
+		//Vault
 		setupPermissions();
+		
+		//événements
 		onconnection = new OnConnection(this,permission);
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(onconnection, this);
+		
+		//Commandes
+		CommandExecutor commandautovip = new Commandautovip(this);
+		getCommand("autovip").setExecutor(commandautovip);
 
 	}
 
