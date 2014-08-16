@@ -1,0 +1,4 @@
+name: AutoVIP
+main: fr.yahoo.diabolomenthe75005.AutoVIP.AutoVIP
+version: 0.1
+database: true
