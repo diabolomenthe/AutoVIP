@@ -29,7 +29,6 @@ public class OnConnection implements Listener{
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void PlayerJoinEvent(final PlayerLoginEvent event){
 		Player player = event.getPlayer();
-		String playername = player.getName();
 		String world;
 		//plugin.getLogger().info("Connexion joueur " + playername);
 		List<World> worlds = plugin.getServer().getWorlds();
